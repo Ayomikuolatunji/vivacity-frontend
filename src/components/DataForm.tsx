@@ -2,15 +2,17 @@ import React from "react";
 import {
   Applicant,
   useDeleteApplicantMutation,
-} from "./redux/apis/crudAPI";
+  useUpdateApplicantMutation,
+} from "../redux/apis/crudAPI";
 
 interface DataFormProps {
   data: Applicant;
-  saveData: (e: React.FormEvent<HTMLFormElement>, formData: Applicant) => void;
+  setData: React.Dispatch<React.SetStateAction<Applicant>>;
 }
 
-const DataForm: React.FC<DataFormProps> = ({ data, saveData }) => {
+const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
   const [deleteApplicant] = useDeleteApplicantMutation();
+  const [updateApplicant] = useUpdateApplicantMutation();
 
   const [formData, setFormData] = React.useState({
     firstName: data.firstName || "",
@@ -26,15 +28,34 @@ const DataForm: React.FC<DataFormProps> = ({ data, saveData }) => {
       [name]: value,
     }));
   };
+  const saveData = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    updateApplicant({
+      id: "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      phone: formData.phone,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+    })
+      .unwrap()
+      .then((data) => {
+        setData(data);
+      });
+  };
 
-  const deleteData = () => {
-    console.log("Deleting data");
+  const deleteApplicantAccount = () => {
+    deleteApplicant("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d")
+      .unwrap()
+      .then((data) => {
+        setData({} as Applicant);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
     <div className="bg-gray-100 p-4">
       <h2 className="text-xl font-bold mb-2">Data Form</h2>
-      <form onSubmit={(e) => saveData(e, formData)}>
+      <form onSubmit={saveData}>
         <div className="mb-4">
           <label htmlFor="firstName" className="block font-semibold">
             First Name:
@@ -97,6 +118,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, saveData }) => {
           <button
             type="submit"
             className="bg-red-500 text-white px-4 py-2 rounded font-semibold"
+            onClick={deleteApplicantAccount}
           >
             Delete
           </button>

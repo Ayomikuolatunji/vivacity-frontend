@@ -1,16 +1,31 @@
 import Gravatar from "react-gravatar";
-import { Applicant } from "./redux/apis/crudAPI";
+import { Applicant, useGetApplicantMutation } from "../redux/apis/crudAPI";
 
-const PictureCard: React.FC<{ onClick: () => void; data: Applicant }> = ({
-  onClick,
-  data,
-}) => {
-      console.log(data);
+interface PictureCardProps {
+  setData: React.Dispatch<React.SetStateAction<Applicant>>;
+  data: Applicant;
+}
+
+const PictureCard: React.FC<PictureCardProps> = ({ setData, data }) => {
+  const [getApplicant] = useGetApplicantMutation();
+
+  const fetchData = async () => {
+    try {
+      getApplicant("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d")
+        .unwrap()
+        .then((data: any) => {
+          setData(data);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="bg-gray-100 p-4">
       <div
         className="relative w-24 h-24 rounded-full overflow-hidden cursor-pointer"
-        onClick={onClick}
+        onClick={fetchData}
       >
         <Gravatar
           email="mathews.kyle@gmail.com"
