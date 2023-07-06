@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import DataForm from "./components/DataForm";
-import PictureCard from "./components/Profile";
+import DataForm from "./components/DetaForms/DataForm";
+import PictureCard from "./components/Profile/Profile";
 import { Applicant } from "./redux/apis/crudAPI";
 
 const App: React.FC = () => {

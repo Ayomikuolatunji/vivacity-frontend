@@ -3,7 +3,7 @@ import {
   Applicant,
   useDeleteApplicantMutation,
   useUpdateApplicantMutation,
-} from "../redux/apis/crudAPI";
+} from "../../redux/apis/crudAPI";
 
 interface DataFormProps {
   data: Applicant;
@@ -40,6 +40,9 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
       .unwrap()
       .then((data) => {
         setData(data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 

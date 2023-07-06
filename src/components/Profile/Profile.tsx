@@ -1,5 +1,5 @@
 import Gravatar from "react-gravatar";
-import { Applicant, useGetApplicantMutation } from "../redux/apis/crudAPI";
+import { Applicant, useGetApplicantMutation } from "../../redux/apis/crudAPI";
 
 interface PictureCardProps {
   setData: React.Dispatch<React.SetStateAction<Applicant>>;
@@ -13,7 +13,7 @@ const PictureCard: React.FC<PictureCardProps> = ({ setData, data }) => {
     try {
       getApplicant("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d")
         .unwrap()
-        .then((data: any) => {
+        .then((data) => {
           setData(data);
         });
     } catch (error) {
@@ -26,6 +26,7 @@ const PictureCard: React.FC<PictureCardProps> = ({ setData, data }) => {
       <div
         className="relative w-24 h-24 rounded-full overflow-hidden cursor-pointer"
         onClick={fetchData}
+        data-testid="picture-card"
       >
         <Gravatar
           email="mathews.kyle@gmail.com"
