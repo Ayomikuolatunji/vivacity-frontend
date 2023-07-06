@@ -2,20 +2,26 @@ import React, { useState } from "react";
 import DataForm from "./components/DetaForms/DataForm";
 import PictureCard from "./components/Profile/Profile";
 import { Applicant } from "./redux/apis/crudAPI";
+import Header from "./components/Header"
+import Footer from "./components/Footer"
 
 const App: React.FC = () => {
   const [data, setData] = useState<Applicant>({} as Applicant);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">My Profile</h1>
-      <div className="grid md:grid-cols-2 gap-4 grid-cols-1">
-        <PictureCard data={data} setData={setData} />
-        {Object.keys(data).length ? (
-          <DataForm data={data} setData={setData} />
-        ) : null}
+    <>
+    <Header/>
+      <div className="container mx-auto p-4">
+        <h1 className="text-3xl font-bold mb-4">My Profile</h1>
+        <div className="grid md:grid-cols-2 gap-4 grid-cols-1">
+          <PictureCard data={data} setData={setData} />
+          {Object.keys(data).length ? (
+            <DataForm data={data} setData={setData} />
+          ) : null}
+        </div>
       </div>
-    </div>
+      <Footer/>
+    </>
   );
 };
 
